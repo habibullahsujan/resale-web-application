@@ -1,4 +1,4 @@
-
+import { Toaster } from 'react-hot-toast';
 import './App.css';
 import UserContext from './Context/UserContext';
 import { RouterProvider } from 'react-router-dom';
@@ -15,6 +15,7 @@ function App() {
         <RouterProvider router={routes}/>
       </UserContext>
       </QueryClientProvider>
+      <Toaster />
     </div>
   );
 }

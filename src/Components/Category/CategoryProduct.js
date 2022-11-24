@@ -1,59 +1,49 @@
 import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
+import Modal from "./Modal";
 
-const CategoryProduct = ({category}) => {
-    console.log(category);
-    const {
-      brandName,
-      location,
-      originalPrice,
-      picture,
-      price,
-      productName,
-      sellerEmail,
-      sellerName,
-      sellerPhone,
-      yearOfUse,
-    } = category;
+const CategoryProduct = ({ category }) => {
+  const {
+    brandName,
+    location,
+    originalPrice,
+    picture,
+    price,
+    productName,
+    sellerEmail,
+    sellerName,
+    sellerPhone,
+    yearOfUse,
+    sellerIsVerified,
+  } = category;
   return (
-    <div class="max-w-2xl mx-auto">
-      <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-          <img
-            class="rounded-t-lg h-60 mx-auto"
-            src={picture}
-            alt=""
-          />
-        </a>
-        <div class="p-5">
-          <a href="#">
-            <h5 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-              {productName}
-            </h5>
-          </a>
-          <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-          <a
-            href="#"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Read more
-            <svg
-              class="-mr-1 ml-2 h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </a>
+    <div className="max-w-2xl mx-auto">
+      <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
+        <img className="rounded-t-lg h-60 mx-auto w-96" src={picture} alt="" />
+
+        <div className="p-5">
+          <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
+            {productName}
+          </h5>
+          <div>
+            <p>Brand Name:{brandName}</p>
+            <p>Seller Location:{location}</p>
+            <p>Market Price:{originalPrice}</p>
+            <p>Seller Price:{price}</p>
+            <div className="flex gap-4 items-center">
+              <p>Seller Name:{sellerName}</p>
+              {sellerIsVerified && <FaCheckCircle className="text-blue-700" />}
+            </div>
+            <p>Seller Email:{sellerEmail}</p>
+            <p>Seller Phone:{sellerPhone}</p>
+            <p>Number of year use:{yearOfUse}</p>
+          </div>
+          <div>
+            <label htmlFor="purchase-modal" className="btn w-full border border-[#5F4B8BFF] bg-[#5F4B8BFF] py-2 text-white font-bold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">Purchase</label>
+          </div>
         </div>
       </div>
+      <Modal/>
     </div>
   );
 };
