@@ -16,15 +16,15 @@ const auth = getAuth(app);
 
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(true);
   const googleAuthProvider=new GoogleAuthProvider();
 
   const createUser = (email, password) => {
-    setLoading(true);
+    setLoader(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const updateUserProfile = (profile) => {
-    setLoading(true);
+    setLoader(true);
     return updateProfile(auth.currentUser, profile);
   };
 
@@ -32,7 +32,7 @@ const UserContext = ({ children }) => {
     return signInWithPopup(auth,googleAuthProvider)
   }
   const loginUser = (email, password) => {
-    setLoading(true);
+    setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -46,7 +46,7 @@ const UserContext = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      setLoader(false);
     });
     return () => {
       unsubscribe();
@@ -56,11 +56,11 @@ const UserContext = ({ children }) => {
     loginUser,
     createUser,
     user,
-    loading,
+    loading: loader,
     logOutUser,
     resetPassword,  
     updateUserProfile,
-    setLoading,
+    setLoading: setLoader,
     loginWithGoogle
   };
   return (

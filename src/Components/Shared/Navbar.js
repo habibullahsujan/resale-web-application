@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRecycle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/UserContext";
 
 const Navbar = () => {
+  const { user, logOutUser } = useContext(AuthContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <div>
       <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="relative flex items-center justify-between">
           <div className="flex items-center">
-            <Link
-              href="/"
-              className="inline-flex items-center mr-8"
-            >
-                <FaRecycle className="h-8 w-8 text-[#5F4B8BFF]"/>
+            <Link to={"/"} className="inline-flex items-center mr-8">
+              <FaRecycle className="h-8 w-8 text-[#5F4B8BFF]" />
               <span className="ml-2 text-xl font-bold tracking-wide text-[#5F4B8BFF] uppercase">
                 Recycle
               </span>
@@ -62,26 +62,53 @@ const Navbar = () => {
             </ul>
           </div>
           <ul className=" items-center hidden space-x-8 lg:flex">
-            <li>
-              <Link
-                to={'/login'}
-                aria-label="Sign in"
-                title="Sign in"
-                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-              >
-               Login
-              </Link>
-            </li>
-            <li>
-              <a
-                href="/signup"
-                className="text-[#021c41] inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                aria-label="Sign up"
-                title="Sign up"
-              >
-                Sign up
-              </a>
-            </li>
+            {user ? (
+              <>
+               <li>
+                  {" "}
+                  <Link
+                    to={"/dashboard"}
+                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li onClick={() => logOutUser()}>
+                  {" "}
+                  <Link
+                    title="logout"
+                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                  >
+                    Logout
+                  </Link>
+                </li>
+               
+              </>
+            ) : (
+              <>
+                {" "}
+                <li>
+                  <Link
+                    to={"/login"}
+                    aria-label="Sign in"
+                    title="Sign in"
+                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="/signup"
+                    className="text-[#021c41] inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                    aria-label="Sign up"
+                    title="Sign up"
+                  >
+                    Sign up
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
           <div className="lg:hidden">
             <button
@@ -110,16 +137,12 @@ const Navbar = () => {
                 <div className="p-5 bg-white border rounded shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <a
-                        href="/"
-                        aria-label="Company"
-                        title="Company"
-                        className="inline-flex items-center"
-                      ><FaRecycle className="h-8 w-8 text-[#5F4B8BFF]"/>
+                      <Link to={"/"} className="inline-flex items-center">
+                        <FaRecycle className="h-8 w-8 text-[#5F4B8BFF]" />
                         <span className="ml-2 text-xl font-bold tracking-wide text-[#5F4B8BFF] uppercase">
-                        Recycle
+                          Recycle
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div>
                       <button
@@ -179,26 +202,41 @@ const Navbar = () => {
                           About us
                         </a>
                       </li>
-                      <li>
-                        <a
-                          href="/"
-                          aria-label="Sign in"
-                          title="Sign in"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          Sign in
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/"
-                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                          aria-label="Sign up"
-                          title="Sign up"
-                        >
-                          Sign up
-                        </a>
-                      </li>
+                      {user ? (
+                        <li onClick={() => logOutUser()}>
+                          {" "}
+                          <Link
+                            title="logout"
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                          >
+                            Logout
+                          </Link>
+                        </li>
+                      ) : (
+                        <>
+                          {" "}
+                          <li>
+                            <Link
+                              to={"/login"}
+                              aria-label="Sign in"
+                              title="Sign in"
+                              className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            >
+                              Login
+                            </Link>
+                          </li>
+                          <li>
+                            <a
+                              href="/signup"
+                              className="text-[#021c41] inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                              aria-label="Sign up"
+                              title="Sign up"
+                            >
+                              Sign up
+                            </a>
+                          </li>
+                        </>
+                      )}
                     </ul>
                   </nav>
                 </div>

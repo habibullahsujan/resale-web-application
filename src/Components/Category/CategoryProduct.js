@@ -43,7 +43,7 @@ const CategoryProduct = ({ category }) => {
           </div>
         </div>
       </div>
-      <Modal/>
+      <Modal category={category}/>
     </div>
   );
 };

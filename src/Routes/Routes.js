@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import SingleCategory from "../Components/Category/SingleCategory";
+import Dashboard from "../Components/Dashboard/Dashboard";
 import Homes from "../Components/Home/Homes";
 import Login from "../Components/Login/Login";
 import ErrorPage from "../Components/Shared/ErrorPage";
@@ -29,4 +30,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+  {
+    path:'/dashboard', element:<Dashboard/>
+  }
 ]);
