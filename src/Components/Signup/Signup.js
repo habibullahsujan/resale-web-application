@@ -24,10 +24,10 @@ const Signup = () => {
     }
     setError("");
     let userRole;
-    if (data.accountType === "buyer_account") {
-      userRole = "buyer_account";
+    if (data.accountType === "buyer") {
+      userRole = "buyer";
     } else {
-      userRole = "seller_account";
+      userRole = "seller";
     }
     const formData = new FormData();
     formData.append("image", data.profilePicture[0]);
@@ -170,12 +170,12 @@ const Signup = () => {
                     className="w-full px-3 py-2 border rounded-md text-black"
                   >
                     <option
-                      value="buyer_account"
+                      value="buyer"
                       defaultValue={"Buyer account"}
                     >
                       Buyer Account
                     </option>
-                    <option value="seller_account">Seller Account</option>
+                    <option value="seller">Seller Account</option>
                   </select>
                   {errors?.accountType?.message && (
                     <p className="text-red-600">
