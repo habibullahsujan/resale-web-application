@@ -63,14 +63,14 @@ const Navbar = () => {
           </div>
           <ul className=" items-center hidden space-x-8 lg:flex">
             <li>
-              <a
-                href="/"
+              <Link
+                to={'/login'}
                 aria-label="Sign in"
                 title="Sign in"
                 className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
-                Sign in
-              </a>
+               Login
+              </Link>
             </li>
             <li>
               <a
