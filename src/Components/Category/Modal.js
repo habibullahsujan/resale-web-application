@@ -13,8 +13,8 @@ const Modal = ({category}) => {
     const customerEmail=user?.email;
     const customerPhone=form.phoneNumber.value;
     const meetingLocation=form.meetingLocation.value;
+    const saleStatus='sold';
     toast.success('product booking success')
-    console.log(productName, productPrice, customerName, customerEmail, customerPhone, meetingLocation);
   }
 
   return (

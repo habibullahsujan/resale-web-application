@@ -17,7 +17,8 @@ const auth = getAuth(app);
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
-  const googleAuthProvider=new GoogleAuthProvider();
+  const googleAuthProvider = new GoogleAuthProvider();
+  const [userData, setUserData] = useState("");
 
   const createUser = (email, password) => {
     setLoader(true);
@@ -28,15 +29,16 @@ const UserContext = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
-  const loginWithGoogle=()=>{
-    return signInWithPopup(auth,googleAuthProvider)
-  }
+  const loginWithGoogle = () => {
+    return signInWithPopup(auth, googleAuthProvider);
+  };
   const loginUser = (email, password) => {
     setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logOutUser = () => {
+    setLoader(true);
     return signOut(auth);
   };
   const resetPassword = (email) => {
@@ -52,16 +54,30 @@ const UserContext = ({ children }) => {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    setLoader(true);
+    if (user) {
+      fetch(`http://localhost:5000/user?email=${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserData(data);
+          setLoader(false);
+        });
+    }
+  }, [user]);
+
   const userInfo = {
     loginUser,
     createUser,
     user,
     loading: loader,
     logOutUser,
-    resetPassword,  
+    resetPassword,
     updateUserProfile,
     setLoading: setLoader,
-    loginWithGoogle
+    loginWithGoogle,
+    userData,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

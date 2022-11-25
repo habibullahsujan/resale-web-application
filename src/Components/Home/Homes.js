@@ -2,6 +2,7 @@ import React from "react";
 import AdvertisedProduct from "./AdvertisedProduct";
 import ProductCategory from "./ProductCategory";
 import Slider from "./Slider";
+import Subscribe from "./Subscribe";
 
 const Homes = () => {
   return (
@@ -14,6 +15,9 @@ const Homes = () => {
       </div>
       <div>
         <ProductCategory />
+      </div>
+      <div>
+        <Subscribe/>
       </div>
     </div>
   );

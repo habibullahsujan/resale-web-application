@@ -56,7 +56,7 @@ const Navbar = () => {
                   title="About us"
                   className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                 >
-                  About us
+                 Blog
                 </a>
               </li>
             </ul>

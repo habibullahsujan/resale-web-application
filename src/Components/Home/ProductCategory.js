@@ -1,20 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Category from "./Category";
-
+import { Oval } from "react-loader-spinner";
 const ProductCategory = () => {
-  const {
-    isLoading,
-    error,
-    data: categories,
-  } = useQuery({
+  const { isLoading, data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
       fetch("http://localhost:5000/categories").then((res) => res.json()),
   });
 
-  if(isLoading){
-    return <div>Loading....</div>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Oval
+          height={40}
+          width={40}
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#4fa94d"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
   }
 
   return (

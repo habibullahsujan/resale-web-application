@@ -1,25 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Oval } from "react-loader-spinner";
+import { Outlet } from "react-router-dom";
 
 import { AuthContext } from "../../Context/UserContext";
-import Sidebar from "./Sidebar";
+import Sidebar from "../../Components/Dashboard/Sidebar";
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState("");
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:5000/user?email=${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoading(false);
-        setUserData(data);
-      });
-  }, [user]);
-  console.log(userData);
-
-  if (isLoading) {
+  const { userData, loader } = useContext(AuthContext);
+// console.log(userData);
+  if (loader) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Oval
@@ -40,9 +29,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div>
-        <Sidebar userData={userData} />
-      </div>
+      <Sidebar userData={userData} />
+      <Outlet />
     </div>
   );
 };

@@ -76,10 +76,10 @@ const Sidebar = ({ userData }) => {
             </nav>
           </div>
         </div>
-
+        
         <div>
           <hr />
-          <button onClick={()=>logOutUser()} className="btn w-full">logout</button>
+          <button className="btn w-full">logout</button>
         </div>
       </div>
     </>
