@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { uploadNewProductData } from "../../../Auth/product";
 import { uploadImage } from "../../../Auth/uploadImage";
 
@@ -7,6 +8,7 @@ import { AuthContext } from "../../../Context/UserContext";
 
 const AddProduct = () => {
   const { userData } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -58,9 +60,12 @@ const AddProduct = () => {
 
           uploadNewProductData(newProduct)
             .then((data) => {
-              form.reset()
-              
-              console.log(data)})
+              form.reset();
+              if (data.acknowledged) {
+                toast.success("Your product successfully added.");
+                navigate("/dashboard/my-products");
+              }
+            })
             .catch((err) => toast.error(err));
         }
 

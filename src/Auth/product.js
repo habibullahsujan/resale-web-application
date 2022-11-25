@@ -13,3 +13,10 @@ export const uploadNewProductData = async (product) => {
   const data = await response.json();
   return data;
 };
+
+export const getSellerUploadedProduct=async(email)=>{
+    const url=`http://localhost:5000/products?email=${email}`;
+    const response=await fetch(url);
+    const data=await response.json();
+    return data;
+}
