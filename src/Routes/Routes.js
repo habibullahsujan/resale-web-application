@@ -13,6 +13,7 @@ import Main from "../Layout/Main";
 import AddProduct from "../Layout/Dashboard/Seller/AddProduct";
 import MyBuyers from "../Layout/Dashboard/Seller/MyBuyers";
 import MyProducts from "../Layout/Dashboard/Seller/MyProducts";
+import WelcomePage from "../Components/Dashboard/WelcomePage";
 
 export const routes = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ export const routes = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />,
     children: [
+      {path:'', element:<WelcomePage/>},
       { path: "/dashboard/all-seller", element: <AllSeller /> },
       { path: "/dashboard/all-buyer", element: <AllBuyers /> },
       { path: "/dashboard/my-orders", element: <MyOrders /> },

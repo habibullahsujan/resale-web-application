@@ -1,21 +1,46 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { soldProduct, updateSellStatus } from "../../Auth/product";
 import { AuthContext } from "../../Context/UserContext";
 
-const Modal = ({category}) => {
+const Modal = ({ category,loadProducts}) => {
   const { user } = useContext(AuthContext);
-  const handleClickBuyNow=(e)=>{
+
+  const handleClickBuyNow = (e) => {
     e.preventDefault();
-    const form=e.target;
-    const productName=category?.productName;
-    const productPrice=category?.price;
-    const customerName=user?.displayName;
-    const customerEmail=user?.email;
-    const customerPhone=form.phoneNumber.value;
-    const meetingLocation=form.meetingLocation.value;
-    const saleStatus='sold';
-    toast.success('product booking success')
-  }
+    const form = e.target;
+    const productName = category?.productName;
+    const productPrice = category?.price;
+    const customerName = user?.displayName;
+    const customerEmail = user?.email;
+    const customerPhone = form.phoneNumber.value;
+    const meetingLocation = form.meetingLocation.value;
+
+    const soldProductInfo = {
+      productName: productName,
+      productPrice,
+      customerName,
+      customerEmail,
+      customerPhone,
+      meetingLocation,
+      sellerName: category?.sellerName,
+      sellerEmail: category?.sellerPhone,
+    };
+    soldProduct(soldProductInfo)
+      .then((data) => {
+        if (data.acknowledged) {
+          updateSellStatus(category?._id)
+            .then((data) => {
+              if (data.modifiedCount > 0) {
+                toast.success("product booking success");
+                loadProducts()
+              }
+            })
+            .catch((err) => toast.error(err.message));
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   return (
     <div>
@@ -32,12 +57,18 @@ const Modal = ({category}) => {
             Hello, {user?.displayName}
           </h3>
           <form onSubmit={handleClickBuyNow} className="py-4">
+            <label htmlFor="price" className="font-semibold">
+              Product Price:
+            </label>
             <input
               type="text"
               defaultValue={category?.price}
               className="input input-bordered w-full my-3"
               disabled
             />
+            <label htmlFor="" className="font-semibold">
+              Product Name
+            </label>
             <input
               type="text"
               name="customerName"
@@ -45,7 +76,10 @@ const Modal = ({category}) => {
               className=" input input-bordered w-full my-3"
               disabled
             />
-                 <input
+            <label htmlFor="" className="font-semibold">
+              Seller Email
+            </label>
+            <input
               type="email"
               placeholder="Email"
               defaultValue={user?.email}
@@ -59,14 +93,12 @@ const Modal = ({category}) => {
               placeholder="Phone Number"
               className="input input-bordered w-full my-3"
             />
-       
             <input
               type="text"
               name="meetingLocation"
               placeholder="Meeting Location"
               className="input input-bordered w-full my-3"
             />
-       
             <button
               type="submit"
               value=""
@@ -74,12 +106,11 @@ const Modal = ({category}) => {
               placeholder="Submit"
               htmlFor="purchase-modal"
             >
-            Buy Now
+              Buy Now
             </button>
           </form>
         </div>
       </div>
-      
     </div>
   );
 };

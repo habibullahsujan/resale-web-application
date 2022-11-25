@@ -22,7 +22,7 @@ const CategoryProduct = ({ category }) => {
         <img className="rounded-t-lg h-60 mx-auto w-96" src={picture} alt="" />
 
         <div className="p-5">
-          <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
+          <h5 className="text-gray-900 font-bold text-xl tracking-tight mb-2 dark:text-white">
             {productName}
           </h5>
           <div>

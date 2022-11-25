@@ -1,14 +1,17 @@
 import React from "react";
 import AdvertisedProduct from "./AdvertisedProduct";
+import Carousel from "./Carousel";
+
 import ProductCategory from "./ProductCategory";
-import Slider from "./Slider";
+
 import Subscribe from "./Subscribe";
+
 
 const Homes = () => {
   return (
     <div>
       <div className="lg:w-[85%] mx-auto">
-        <Slider />
+        <Carousel/>
       </div>
       <div>
         <AdvertisedProduct />

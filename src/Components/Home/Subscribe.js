@@ -27,7 +27,7 @@ const Subscribe = () => {
                Subscribe
               </Link>
             </div>
-            <p className="text-gray-500">By clicking Subscribe, I agree to receive exclusive offers & promotions, news & reviews, and personalized tips for buying and selling on Reverb.</p>
+            <p className="text-gray-500">By clicking Subscribe, I agree to receive exclusive offers & promotions, news & reviews, and personalized tips for buying and selling on Recycle.</p>
           </div>
         </div>
       </section>

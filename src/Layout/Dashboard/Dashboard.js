@@ -7,7 +7,6 @@ import Sidebar from "../../Components/Dashboard/Sidebar";
 
 const Dashboard = () => {
   const { userData, loader } = useContext(AuthContext);
-// console.log(userData);
   if (loader) {
     return (
       <div className="flex justify-center items-center h-screen">

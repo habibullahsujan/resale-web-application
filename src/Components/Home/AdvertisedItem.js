@@ -1,35 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
-const AdvertisedItem = ({product}) => {
-    return (
-        <div class="max-w-2xl mx-auto my-10">
-        <div class="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-          <img
-            class="rounded-t-lg p-8"
-            src={product?.picture}
-            alt=""
-          />
+import Modal from "../Category/Modal";
 
-          <div class="px-5 pb-5">
-            <h3 class="text-gray-900 font-semibold text-lg tracking-tight dark:text-white">
-              {product?.productName}
-            </h3>
-
-            <div class="flex items-center justify-between">
-              <span class="text-xl font-semibold text-gray-900 dark:text-white">
-              {product?.price}
-              </span>
-              <Link
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Buy This
-              </Link>
+const AdvertisedItem = ({ product, loadProducts }) => {
+  const {
+    brandName,
+    location,
+    originalPrice,
+    price,
+    sellerName,
+    sellerIsVerified,
+    sellerEmail,
+    sellerPhone,
+    yearOfUse,
+  } = product;
+  return (
+    <>
+      {product?.saleStatus === "unsold" && (
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
+            <img className="rounded-t-lg" src={product?.picture} alt="" />
+            <div className="p-5">
+              <h5 className="text-gray-900 font-bold text-lg tracking-tight mb-2 dark:text-white">
+                {product?.productName}
+              </h5>
+              <div className="text-gray-600 my-6">
+                <p>Brand Name:{brandName}</p>
+                <p>Seller Location:{location}</p>
+                <p>Market Price:${originalPrice}</p>
+                <p>Seller Price:${price}</p>
+                <div className="flex gap-4 items-center">
+                  <p>Seller Name:{sellerName}</p>
+                  {sellerIsVerified && (
+                    <FaCheckCircle
+                      title="seller is verified"
+                      className="text-blue-700"
+                    />
+                  )}
+                </div>
+                <p>Seller Email:{sellerEmail}</p>
+                <p>Seller Phone:{sellerPhone}</p>
+                <p>Number of year use:{yearOfUse}</p>
+              </div>
+              <div>
+                <label
+                  htmlFor="purchase-modal"
+                  className="btn w-full border border-[#5F4B8BFF] bg-[#5F4B8BFF] py-2 text-white font-bold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
+                >
+                  Purchase
+                </label>
+              </div>
             </div>
           </div>
+          <Modal category={product} loadProducts={loadProducts} />
         </div>
-      </div>
-    );
+      )}
+    </>
+  );
 };
 
 export default AdvertisedItem;

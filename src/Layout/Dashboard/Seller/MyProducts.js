@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
-import { deleteProduct } from "../../../Auth/product";
+import { Link } from "react-router-dom";
+import {
+  advertisedAProduct,
+  deleteProduct,
+  getProductToAdvertise,
+} from "../../../Auth/product";
 import DeleteModal from "../../../Components/Modal/DeleteModal";
 import { AuthContext } from "../../../Context/UserContext";
 
@@ -17,7 +22,6 @@ const MyProducts = () => {
   }
   const {
     isLoading,
-    error,
     data: products,
     refetch,
   } = useQuery({
@@ -32,13 +36,24 @@ const MyProducts = () => {
   });
 
   const modalHandler = (id) => {
-  
     deleteProduct(id)
       .then((data) => {
         refetch();
         toast.success("Product successfully deleted.");
       })
       .catch((error) => toast.error(error));
+  };
+
+  const handleAdvertise = (id) => {
+    advertisedAProduct(id)
+      .then((data) => {
+        toast.success(
+          "Your product successfully advertised. It will be show homepage form now."
+        );
+
+        console.log(data);
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   if (isLoading) {
@@ -61,90 +76,106 @@ const MyProducts = () => {
   }
   return (
     <>
-      <div className="text-black lg:ml-64">
-        <table class="min-w-full border-collapse block md:table">
-          <thead class="block md:table-header-group">
-            <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative bg-black">
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Product Name
-              </th>
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Product Price
-              </th>
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Total Views
-              </th>
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Product Status
-              </th>
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Advertise
-              </th>
-              <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody class="block md:table-row-group">
-            {products &&
-              products.map((product) => (
-                <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
-                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                    <span class="inline-block w-1/3 md:hidden font-bold">
-                      Product Name
-                    </span>
-                    {product?.productName}
-                  </td>
-                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                    <span class="inline-block w-1/3 md:hidden font-bold">
-                      Product Price
-                    </span>
-                    ${product?.price}
-                  </td>
-                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                    <span class="inline-block w-1/3 md:hidden font-bold">
-                      0
-                    </span>
-                    0
-                  </td>
-                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                    <span class="inline-block w-1/3 md:hidden font-bold">
-                      Product Status
-                    </span>
-                    {product?.sold ? "Sold" : "Available"}
-                  </td>
-                  {product?.sold || (
+      {products && Array.isArray(products) && products.length > 0 ? (
+        <div className="text-black lg:ml-64">
+          <table class="min-w-full border-collapse block md:table">
+            <thead class="block md:table-header-group">
+              <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative bg-black">
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Product Name
+                </th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Product Price
+                </th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Total Views
+                </th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Product Status
+                </th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Advertise
+                </th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody class="block md:table-row-group">
+              {products &&
+                products.map((product) => (
+                  <tr key={product._id} class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                       <span class="inline-block w-1/3 md:hidden font-bold">
-                        Advertise
+                        Product Name
                       </span>
-                      <button class="bg-green-400 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded">
-                        Advertise
-                      </button>
+                      {product?.productName}
                     </td>
-                  )}
-                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                    <span class="inline-block w-1/3 md:hidden font-bold">
-                      Actions
-                    </span>
-                    <button
-                      onClick={openModal}
-                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
-                    >
-                      Delete
-                    </button>{" "}
-                    <DeleteModal
-                      isOpen={isOpen}
-                      closeModal={closeModal}
-                      modalHandler={modalHandler}
-                      id={product?._id}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                      <span class="inline-block w-1/3 md:hidden font-bold">
+                        Product Price
+                      </span>
+                      ${product?.price}
+                    </td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                      <span class="inline-block w-1/3 md:hidden font-bold">
+                        0
+                      </span>
+                      0
+                    </td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                      <span class="inline-block w-1/3 md:hidden font-bold">
+                        Product Status
+                      </span>
+                      {product?.saleStatus === 'sold'? "Sold" : "unsold"}
+                    </td>
+                    {product?.saleStatus ==='unsold' && (
+                      <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                        <span class="inline-block w-1/3 md:hidden font-bold">
+                          Advertise
+                        </span>
+                        <button
+                          onClick={(id) => handleAdvertise(product?._id)}
+                          class="bg-green-400 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
+                        >
+                          Advertise
+                        </button>
+                      </td>
+                    )}
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                      <span class="inline-block w-1/3 md:hidden font-bold">
+                        Actions
+                      </span>
+                      <button
+                        onClick={openModal}
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
+                      >
+                        Delete
+                      </button>{" "}
+                      <DeleteModal
+                        isOpen={isOpen}
+                        closeModal={closeModal}
+                        modalHandler={modalHandler}
+                        id={product?._id}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <>
+          <div className="h-screen text-gray-600 gap-5 flex justify-center items-center text-2xl font-bold">
+            You haven't upload any product yet.
+            <Link to={"/"}>
+              <button classes="px-6 py-2 text-medium font-semibold rounded-full">
+                Go Home
+              </button>
+            </Link>
+          </div>
+        </>
+      )}
     </>
   );
 };

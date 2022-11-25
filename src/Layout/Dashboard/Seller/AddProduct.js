@@ -39,7 +39,7 @@ const AddProduct = () => {
       .then((imgData) => {
         if (imgData.success) {
           const newProduct = {
-            sold: false,
+            saleStatus:'unsold',
             price: productPrice,
             originalPrice: productMarketPrice,
             picture: imgData?.data?.display_url,
@@ -56,7 +56,6 @@ const AddProduct = () => {
             location: location,
             productDescription: description,
           };
-          console.log(newProduct);
 
           uploadNewProductData(newProduct)
             .then((data) => {

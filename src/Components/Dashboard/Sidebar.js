@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa";
+import { Oval } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/UserContext";
 import AdminMenu from "./AdminMenu";
@@ -7,11 +8,30 @@ import BuyerMenu from "./BuyerMenu";
 import SellerMenu from "./SellerMenu";
 
 const Sidebar = ({ userData }) => {
-  const { user,logOutUser } = useContext(AuthContext);
+  const { user, logOutUser, loader } = useContext(AuthContext);
   const [isActive, setActive] = useState(false);
   const handleToggle = () => {
     setActive(!isActive);
   };
+
+  if (!userData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+      <Oval
+        height={40}
+        width={40}
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      />
+    </div>
+    );
+  }
   return (
     <>
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
@@ -69,17 +89,18 @@ const Sidebar = ({ userData }) => {
               )}
               {userData?.user_role === "buyer" && (
                 <>
-                  <SellerMenu />
+                  <BuyerMenu />
                 </>
               )}
-              {userData?.user_role === "seller" && <BuyerMenu />}
+              {userData?.user_role === "seller" && <SellerMenu />}
             </nav>
           </div>
         </div>
-        
         <div>
           <hr />
-          <button className="btn w-full">logout</button>
+          <li onClick={() => logOutUser()} className="btn w-full">
+            logout
+          </li>
         </div>
       </div>
     </>
