@@ -28,8 +28,8 @@ const CategoryProduct = ({ category }) => {
           <div>
             <p>Brand Name:{brandName}</p>
             <p>Seller Location:{location}</p>
-            <p>Market Price:{originalPrice}</p>
-            <p>Seller Price:{price}</p>
+            <p>Market Price:${originalPrice}</p>
+            <p>Seller Price:${price}</p>
             <div className="flex gap-4 items-center">
               <p>Seller Name:{sellerName}</p>
               {sellerIsVerified && <FaCheckCircle className="text-blue-700" />}

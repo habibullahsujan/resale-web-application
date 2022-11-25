@@ -14,6 +14,7 @@ const Homes = () => {
         <AdvertisedProduct />
       </div>
       <div>
+        <h3 className="font-bold text-center text-2xl">Buy and Sell Product By Categories</h3>
         <ProductCategory />
       </div>
       <div>
