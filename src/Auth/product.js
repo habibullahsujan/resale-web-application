@@ -1,5 +1,11 @@
-import { async } from "@firebase/util";
 
+//get category product
+export const categoryProducts=async(id)=>{
+  const url =`http://localhost:5000/single_category/${id}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
 
 ///upload new products
 export const uploadNewProductData = async (product) => {
@@ -14,20 +20,7 @@ export const uploadNewProductData = async (product) => {
   const data = await response.json();
   return data;
 };
-//get seller all products
-// export const getSellerUploadedProduct = async (email) => {
-//   const url = `http://localhost:5000/products?email=${email}`;
-//   const response = await fetch(url);
-//   const data = await response.json();
-//   return data;
-// };
-//get advertised products
-export const getAdvertisedProducts = async () => {
-  const url = `http://localhost:5000/advertised/products`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
+
 //delete a single product
 export const deleteProduct = async (id) => {
   const url = `http://localhost:5000/product/delete/${id}`;
@@ -47,6 +40,7 @@ export const advertisedAProduct = async (id) => {
 
 //store sold product data;
 export const soldProduct=async(product)=>{
+
   const url = "http://localhost:5000/sold-product";
   const response = await fetch(url, {
     method: "POST",

@@ -5,7 +5,6 @@ import { AuthContext } from "../../Context/UserContext";
 
 const Navbar = () => {
   const { user, logOutUser } = useContext(AuthContext);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <div>
@@ -20,41 +19,21 @@ const Navbar = () => {
             </Link>
             <ul className="items-center hidden space-x-8 lg:flex">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to={"/all-products"}
                   aria-label="Our product"
                   title="Our product"
                   className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                 >
-                  Product
-                </a>
+                  Products
+                </Link>
               </li>
               <li>
-                <a
-                  href="/"
-                  aria-label="Our product"
-                  title="Our product"
+                <Link
+                  to={"/blog"}
                   className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                 >
-                  Features
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/"
-                  aria-label="Product pricing"
-                  title="Product pricing"
-                  className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <Link to={'/blog'}
-              
-                  className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                >
-                 Blog
+                  Blog
                 </Link>
               </li>
             </ul>
@@ -62,7 +41,7 @@ const Navbar = () => {
           <ul className=" items-center hidden space-x-8 lg:flex">
             {user ? (
               <>
-               <li>
+                <li>
                   {" "}
                   <Link
                     to={"/dashboard"}
@@ -80,7 +59,6 @@ const Navbar = () => {
                     Logout
                   </Link>
                 </li>
-               
               </>
             ) : (
               <>
@@ -161,44 +139,22 @@ const Navbar = () => {
                   <nav>
                     <ul className="space-y-4">
                       <li>
-                        <a
-                          href="/"
+                        <Link
+                          to={"/all-products"}
                           aria-label="Our product"
                           title="Our product"
                           className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
-                          Product
-                        </a>
+                          Products
+                        </Link>
                       </li>
                       <li>
-                        <a
-                          href="/"
-                          aria-label="Our product"
-                          title="Our product"
+                        <Link
+                          to={"/blog"}
                           className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
-                          Features
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/"
-                          aria-label="Product pricing"
-                          title="Product pricing"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          Pricing
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/"
-                          aria-label="About us"
-                          title="About us"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          About us
-                        </a>
+                          Blog
+                        </Link>
                       </li>
                       {user ? (
                         <li onClick={() => logOutUser()}>

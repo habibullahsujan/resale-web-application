@@ -1,12 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
 
 const AdminRoute = ({ children }) => {
-  const { user, loader, userData } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const location = useLocation();
-  if (loader) {
+  const [userData, setUserData]=useState({});
+  const [loading, setLoading]=useState(true)
+  useEffect(() => {
+    setLoading(true);
+    if (user?.email) {
+      fetch(`http://localhost:5000/user?email=${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserData(data);
+          setLoading(false);
+        });
+    }
+  }, [user?.email]);
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Oval

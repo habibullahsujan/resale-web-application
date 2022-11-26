@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { AuthContext } from "../../../Context/UserContext";
+import React from "react";
 
 const ReportedItems = () => {
-    const {user}=useContext(AuthContext)
   const {
     isLoading,
     error,
@@ -15,8 +13,6 @@ const ReportedItems = () => {
         res.json()
       ),
   });
-
-  console.log(reportedProducts);
   if (isLoading) {
     return "Loading...";
   }
@@ -36,13 +32,13 @@ const ReportedItems = () => {
               <th>User Email</th>
               <th>Product Name</th>
               <th>Price</th>
-              <th>Message</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {reportedProducts.map((product) => (
               <tr className="hover" key={product._id}>
-                <td>{product?.seller_email}</td>
+                <td className="overflow-auto">{product?.seller_email}</td>
                 <td>{product?.sellerPhone}</td>
                 <td>{product?.user_email}</td>
                 <td>{product?.product_name}</td>

@@ -3,37 +3,41 @@ import toast from "react-hot-toast";
 import { soldProduct, updateSellStatus } from "../../Auth/product";
 import { AuthContext } from "../../Context/UserContext";
 
-const Modal = ({ category,loadProducts}) => {
+const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
   const { user } = useContext(AuthContext);
 
   const handleClickBuyNow = (e) => {
     e.preventDefault();
     const form = e.target;
-    const productName = category?.productName;
-    const productPrice = category?.price;
+    const productName = selectedProduct?.productName;
+    const productPrice = selectedProduct?.price;
     const customerName = user?.displayName;
     const customerEmail = user?.email;
     const customerPhone = form.phoneNumber.value;
     const meetingLocation = form.meetingLocation.value;
 
     const soldProductInfo = {
+      product_id: selectedProduct._id,
       productName: productName,
       productPrice,
       customerName,
       customerEmail,
       customerPhone,
       meetingLocation,
-      sellerName: category?.sellerName,
-      sellerEmail: category?.sellerPhone,
+      sellerName: selectedProduct?.sellerName,
+      sellerEmail: selectedProduct?.sellerEmail,
+      sellerPhone:selectedProduct?.sellerPhone,
     };
+ 
     soldProduct(soldProductInfo)
       .then((data) => {
         if (data.acknowledged) {
-          updateSellStatus(category?._id)
+          updateSellStatus(selectedProduct?._id)
             .then((data) => {
-              if (data.modifiedCount > 0) {
+              if (data.acknowledged) {
                 toast.success("product booking success");
-                loadProducts()
+                refetch()
+                setSelectedProduct(null);
               }
             })
             .catch((err) => toast.error(err.message));
@@ -47,22 +51,30 @@ const Modal = ({ category,loadProducts}) => {
       <input type="checkbox" id="purchase-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
-          <label
+          {/* <label
             htmlFor="purchase-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
-          </label>
+          </label> */}
           <h3 className="text-lg font-bold text-center text-info">
             Hello, {user?.displayName}
           </h3>
           <form onSubmit={handleClickBuyNow} className="py-4">
+            <input
+              type="email"
+              placeholder="Email"
+              defaultValue={user?.email}
+              name="email"
+              className="input input-bordered w-full my-3"
+              disabled
+            />
             <label htmlFor="price" className="font-semibold">
               Product Price:
             </label>
             <input
               type="text"
-              defaultValue={category?.price}
+              defaultValue={selectedProduct?.price}
               className="input input-bordered w-full my-3"
               disabled
             />
@@ -72,7 +84,7 @@ const Modal = ({ category,loadProducts}) => {
             <input
               type="text"
               name="customerName"
-              defaultValue={category?.productName}
+              defaultValue={selectedProduct?.productName}
               className=" input input-bordered w-full my-3"
               disabled
             />
@@ -82,7 +94,7 @@ const Modal = ({ category,loadProducts}) => {
             <input
               type="email"
               placeholder="Email"
-              defaultValue={user?.email}
+              defaultValue={selectedProduct?.sellerEmail}
               name="email"
               className="input input-bordered w-full my-3"
               disabled
@@ -106,7 +118,7 @@ const Modal = ({ category,loadProducts}) => {
               placeholder="Submit"
               htmlFor="purchase-modal"
             >
-              Buy Now
+              Submit
             </button>
           </form>
         </div>

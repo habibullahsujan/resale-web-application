@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 const Carousel = () => {
   const settings = {
@@ -58,7 +59,7 @@ const Carousel = () => {
               need and sell all sorts of products in our simple yet powerful
               platform.
             </p>
-            <button className="btn">Shop Now</button>
+            <Link to={'/all-products'} className="btn">Shop Now</Link>
           </div>
 
           <img
@@ -78,7 +79,7 @@ const Carousel = () => {
               need and sell all sorts of products in our simple yet powerful
               platform. Sign Up Now
             </p>
-            <a href="#productCategory" className="btn">Shop Now</a>
+            <Link to={'/all-products'} className="btn">Shop Now</Link>
           </div>
           <img
             className="w-[78%] mx-auto h-64 rounded-lg"

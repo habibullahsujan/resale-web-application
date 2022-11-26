@@ -37,6 +37,9 @@ const AddProduct = () => {
 
     uploadImage(productPicture)
       .then((imgData) => {
+        const date=new Date().getDate();
+        const month=new Date().getMonth();
+        const year=new Date().getFullYear();
         if (imgData.success) {
           const newProduct = {
             saleStatus:'unsold',
@@ -55,6 +58,7 @@ const AddProduct = () => {
             sellerPhone: sellerMobile,
             location: location,
             productDescription: description,
+            postedTime: {date,month,year},
           };
 
           uploadNewProductData(newProduct)
@@ -68,7 +72,6 @@ const AddProduct = () => {
             .catch((err) => toast.error(err));
         }
 
-        console.log(imgData);
       })
       .catch((error) => {
         toast.error(error.message);

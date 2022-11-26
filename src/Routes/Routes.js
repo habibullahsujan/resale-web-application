@@ -19,6 +19,8 @@ import AdminRoute from "./AdminRoute";
 import SellerRoute from "./SellerRoute";
 import Blog from "../Components/Blog/Blog";
 import ReportedItems from "../Layout/Dashboard/Admin/ReportedItems";
+import MyWishlist from "../Layout/Dashboard/Buyer/MyWishlist";
+import AllProducts from "../Components/AllProducts/AllProducts";
 
 export const routes = createBrowserRouter([
   {
@@ -49,6 +51,11 @@ export const routes = createBrowserRouter([
         path: "/blog",
         element: <Blog />,
       },
+      {
+        path: "/all-products",
+        element: <AllProducts />,
+        loader: () => fetch(`http://localhost:5000/all-products`),
+      },
     ],
   },
   {
@@ -70,11 +77,9 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/all-seller",
         element: (
-          <PrivateRoute>
-            <AdminRoute>
-              <AllSeller />
-            </AdminRoute>
-          </PrivateRoute>
+          <AdminRoute>
+            <AllSeller />
+          </AdminRoute>
         ),
       },
       {
@@ -102,10 +107,18 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/my-wishlist",
+        element: (
+          <PrivateRoute>
+            <MyWishlist />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/dashboard/add-product",
         element: (
           <SellerRoute>
-            <AddProduct />{" "}
+            <AddProduct />
           </SellerRoute>
         ),
       },
@@ -113,7 +126,7 @@ export const routes = createBrowserRouter([
         path: "/dashboard/my-products",
         element: (
           <SellerRoute>
-            <MyProducts />{" "}
+            <MyProducts />
           </SellerRoute>
         ),
       },

@@ -26,7 +26,7 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        toast.success(error.message);
+        toast.error(error.message);
         setLoading(false);
       });
   };
@@ -84,27 +84,6 @@ const Login = () => {
                 />
                 {errors?.email?.message && (
                   <p className="text-red-600">{errors?.email?.message}</p>
-                )}
-              </div>
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm">
-                  Account Type
-                </label>
-                <select
-                  name="accountType"
-                  id=""
-                  {...register("accountType", {
-                    required: "Account type must be selected.",
-                  })}
-                  className="w-full px-3 py-2 border rounded-md text-black"
-                >
-                  <option value="buyer_account" defaultValue={"Buyer account"}>
-                    Buyer Account
-                  </option>
-                  <option value="seller_account">Seller Account</option>
-                </select>
-                {errors?.accountType?.message && (
-                  <p className="text-red-600">{errors?.accountType?.message}</p>
                 )}
               </div>
               <div>

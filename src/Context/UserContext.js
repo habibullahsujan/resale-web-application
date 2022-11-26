@@ -18,7 +18,7 @@ const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
   const googleAuthProvider = new GoogleAuthProvider();
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState({});
 
   const createUser = (email, password) => {
     setLoader(true);
@@ -54,18 +54,6 @@ const UserContext = ({ children }) => {
       unsubscribe();
     };
   }, []);
-
-  useEffect(() => {
-    setLoader(true);
-    if (user) {
-      fetch(`http://localhost:5000/user?email=${user?.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUserData(data);
-          setLoader(false);
-        });
-    }
-  }, [user]);
 
   const userInfo = {
     loginUser,
