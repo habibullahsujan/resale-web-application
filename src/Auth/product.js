@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 
 
 ///upload new products
@@ -64,5 +65,40 @@ export const updateSellStatus=async(id)=>{
   const response = await fetch(url, { method: "PUT" });
   const data = await response.json();
   return data;
+}
+//add a product in the wishlist
+export const addProductAWishlist=async(wishListData)=>{
 
+  const url = `http://localhost:5000/wishlist-product`;
+  const response = await fetch(url, { 
+    method: "POST",
+    headers:{
+      'content-type':'application/json',
+    },
+    body:JSON.stringify(wishListData)
+  
+  });
+  const data = await response.json();
+  return data;
+}
+//report a product
+export const reportProduct=async(reportedProductData)=>{
+  const url = `http://localhost:5000/report-product`;
+  const response = await fetch(url, { 
+    method: "POST",
+    headers:{
+      'content-type':'application/json',
+    },
+    body:JSON.stringify(reportedProductData)
+  
+  });
+  const data = await response.json();
+  return data;
+}
+//get reported  product
+export const getAllReportedProduct=async()=>{
+  const url = `http://localhost:5000/reported-products`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 }

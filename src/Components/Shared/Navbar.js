@@ -50,14 +50,12 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="/"
-                  aria-label="About us"
-                  title="About us"
+                <Link to={'/blog'}
+              
                   className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                 >
                  Blog
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../Context/UserContext";
 
 const AllBuyers = () => {
+
+  const {userData}=useContext(AuthContext);
+
   const {
     isLoading,
     error,
     data: buyers,
   } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["all-buyer"],
     queryFn: () =>
       fetch("http://localhost:5000/all-buyer").then((res) => res.json()),
   });
+
   return (
     <div className="text-black lg:ml-64 bg-blue-400">
       <table className="min-w-full border-collapse block md:table">
@@ -41,7 +46,7 @@ const AllBuyers = () => {
                   <span className="inline-block w-1/3 md:hidden font-bold">
                     Buyer Photo
                   </span>
-                  <img className="h-20 w-20" src={buyer?.user_photo} alt="" />
+                  <img className="h-10 w-20" src={buyer?.user_photo} alt="" />
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">

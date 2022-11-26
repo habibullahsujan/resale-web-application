@@ -71,11 +71,11 @@ const UserContext = ({ children }) => {
     loginUser,
     createUser,
     user,
-    loading: loader,
+    loader,
     logOutUser,
     resetPassword,
     updateUserProfile,
-    setLoading: setLoader,
+    setLoader,
     loginWithGoogle,
     userData,
   };

@@ -41,7 +41,7 @@ const AllSeller = () => {
                     <span className="inline-block w-1/3 md:hidden font-bold">
                       Buyer Photo
                     </span>
-                    <img className="h-20 w-20" src={slr?.user_photo} alt="" />
+                    <img className="h-10 w-20" src={slr?.user_photo} alt="" />
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
