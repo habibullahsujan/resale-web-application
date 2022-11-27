@@ -21,6 +21,7 @@ import Blog from "../Components/Blog/Blog";
 import ReportedItems from "../Layout/Dashboard/Admin/ReportedItems";
 import MyWishlist from "../Layout/Dashboard/Buyer/MyWishlist";
 import AllProducts from "../Components/AllProducts/AllProducts";
+import Payment from "../Components/Payment/Payment";
 
 export const routes = createBrowserRouter([
   {
@@ -50,6 +51,15 @@ export const routes = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/payment/:id",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+        loader:({params})=>fetch(`http://localhost:5000/payment/${params.id}`)
       },
       {
         path: "/all-products",

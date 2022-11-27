@@ -20,12 +20,7 @@ const Footer = () => {
             </a>
             <div className="mt-4 lg:max-w-sm">
               <p className="text-sm text-deep-purple-50">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam.
-              </p>
-              <p className="mt-4 text-sm text-deep-purple-50">
-                Eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                beatae vitae dicta sunt explicabo.
+              Recycle is the fastest online marketplace in Bangladesh.. Start buying things instantly with our simple navigation and you can sell your products to the customers according to their location. With multiple payment methods, secure transaction options and fast delivery, buying online has never been easier.
               </p>
             </div>
           </div>
@@ -40,7 +35,7 @@ const Footer = () => {
                     href="/"
                     className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
                   >
-                    News
+                  HP Laptops
                   </a>
                 </li>
                 <li>
@@ -48,7 +43,7 @@ const Footer = () => {
                     href="/"
                     className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
                   >
-                    World
+                    Dell Laptops
                   </a>
                 </li>
                 <li>
@@ -56,7 +51,7 @@ const Footer = () => {
                     href="/"
                     className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
                   >
-                    Games
+                    Lenovo Laptops
                   </a>
                 </li>
                 <li>
@@ -64,14 +59,14 @@ const Footer = () => {
                     href="/"
                     className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
                   >
-                    References
+                    Apple Laptops
                   </a>
                 </li>
               </ul>
             </div>
             <div>
               <p className="font-semibold tracking-wide text-teal-accent-400">
-                Cherry
+               Pages
               </p>
               <ul className="mt-2 space-y-2">
                 <li>
@@ -118,7 +113,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="font-semibold tracking-wide text-teal-accent-400">
-                Apples
+                More
               </p>
               <ul className="mt-2 space-y-2">
                 <li>

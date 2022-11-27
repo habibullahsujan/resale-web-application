@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import {
   advertisedAProduct,
   deleteProduct,
-  getProductToAdvertise,
 } from "../../../Auth/product";
 import DeleteModal from "../../../Components/Modal/DeleteModal";
 import { AuthContext } from "../../../Context/UserContext";

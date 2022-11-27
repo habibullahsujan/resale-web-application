@@ -71,7 +71,7 @@ const MyWishlist = () => {
       ) : (
         <div className="flex justify-center items-center h-screen">
           <h1 className="font-bold text-lg">
-            You have not any items in the wishlist.Start{" "}
+            You have no items in the wishlist.Start{" "}
             <Link className="text-blue-500" to={"/all-products"}>Shopping</Link>
           </h1>
         </div>

@@ -1,11 +1,12 @@
 
+
 //get category product
-export const categoryProducts=async(id)=>{
-  const url =`http://localhost:5000/single_category/${id}`;
+export const categoryProducts = async (id) => {
+  const url = `http://localhost:5000/single_category/${id}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
-}
+};
 
 ///upload new products
 export const uploadNewProductData = async (product) => {
@@ -37,10 +38,8 @@ export const advertisedAProduct = async (id) => {
   return data;
 };
 
-
 //store sold product data;
-export const soldProduct=async(product)=>{
-
+export const soldProduct = async (product) => {
   const url = "http://localhost:5000/sold-product";
   const response = await fetch(url, {
     method: "POST",
@@ -51,48 +50,84 @@ export const soldProduct=async(product)=>{
   });
   const data = await response.json();
   return data;
-}
+};
 
-//after sold product change product sellStatus
-export const updateSellStatus=async(id)=>{
-  const url = `http://localhost:5000/sold-product/${id}`;
+//update sold status
+export const updateSoldStatus = async (id) => {
+  const url = `http://localhost:5000/soldProducts/${id}`;
   const response = await fetch(url, { method: "PUT" });
   const data = await response.json();
   return data;
-}
-//add a product in the wishlist
-export const addProductAWishlist=async(wishListData)=>{
+};
 
+//after sold product change product sellStatus
+export const updateSellStatus = async (id) => {
+  const url = `http://localhost:5000/booked-product/${id}`;
+  const response = await fetch(url, { method: "PUT" });
+  const data = await response.json();
+  return data;
+};
+//add a product in the wishlist
+export const addProductAWishlist = async (wishListData) => {
   const url = `http://localhost:5000/wishlist-product`;
-  const response = await fetch(url, { 
+  const response = await fetch(url, {
     method: "POST",
-    headers:{
-      'content-type':'application/json',
+    headers: {
+      "content-type": "application/json",
     },
-    body:JSON.stringify(wishListData)
-  
+    body: JSON.stringify(wishListData),
   });
   const data = await response.json();
   return data;
-}
+};
 //report a product
-export const reportProduct=async(reportedProductData)=>{
+export const reportProduct = async (reportedProductData) => {
   const url = `http://localhost:5000/report-product`;
-  const response = await fetch(url, { 
+  const response = await fetch(url, {
     method: "POST",
-    headers:{
-      'content-type':'application/json',
+    headers: {
+      "content-type": "application/json",
     },
-    body:JSON.stringify(reportedProductData)
-  
+    body: JSON.stringify(reportedProductData),
   });
   const data = await response.json();
   return data;
-}
+};
 //get reported  product
-export const getAllReportedProduct=async()=>{
+export const getAllReportedProduct = async () => {
   const url = `http://localhost:5000/reported-products`;
   const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+///store booked product
+export const storeBookedProduct = async (bookedProductData) => {
+  const url = "http://localhost:5000/my-orders";
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(bookedProductData),
+  });
+  const data = await response.json();
+  return data;
+};
+
+//remove item form cart
+export const removeItemFromCart = async (id) => {
+  const url = `http://localhost:5000/remove-from-cart/${id}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const updateBookedProductSoldStatus=async(id)=>{
+  const url = `http://localhost:5000/bookedProducts/${id}`;
+  const response = await fetch(url, { method: "PUT" });
   const data = await response.json();
   return data;
 }

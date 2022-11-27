@@ -1,20 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { AuthContext } from "../../../Context/UserContext";
+import React from "react";
+import { Oval } from "react-loader-spinner";
+
 
 const AllBuyers = () => {
 
-  const {userData}=useContext(AuthContext);
 
   const {
     isLoading,
-    error,
     data: buyers,
   } = useQuery({
     queryKey: ["all-buyer"],
     queryFn: () =>
       fetch("http://localhost:5000/all-buyer").then((res) => res.json()),
   });
+  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Oval
+          height={40}
+          width={40}
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#4fa94d"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="text-black lg:ml-64 bg-blue-400">

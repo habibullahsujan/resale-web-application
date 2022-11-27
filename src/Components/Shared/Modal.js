@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { soldProduct, updateSellStatus } from "../../Auth/product";
+import { storeBookedProduct, updateSellStatus } from "../../Auth/product";
 import { AuthContext } from "../../Context/UserContext";
 
-const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
+const Modal = ({ setSelectedProduct, selectedProduct, refetch }) => {
   const { user } = useContext(AuthContext);
 
   const handleClickBuyNow = (e) => {
@@ -16,9 +16,10 @@ const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
     const customerPhone = form.phoneNumber.value;
     const meetingLocation = form.meetingLocation.value;
 
-    const soldProductInfo = {
+    const bookedProductInfo = {
       product_id: selectedProduct._id,
       productName: productName,
+      productImg:selectedProduct?.picture,
       productPrice,
       customerName,
       customerEmail,
@@ -26,18 +27,18 @@ const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
       meetingLocation,
       sellerName: selectedProduct?.sellerName,
       sellerEmail: selectedProduct?.sellerEmail,
-      sellerPhone:selectedProduct?.sellerPhone,
+      sellerPhone: selectedProduct?.sellerPhone,
     };
- 
-    soldProduct(soldProductInfo)
+    storeBookedProduct(bookedProductInfo)
       .then((data) => {
         if (data.acknowledged) {
-          updateSellStatus(selectedProduct?._id)
+          updateSellStatus(selectedProduct._id)
             .then((data) => {
               if (data.acknowledged) {
-                toast.success("product booking success");
-                refetch()
-                setSelectedProduct(null);
+                toast.success(
+                  "Product booked success. you can pay for this product from your dashboard."
+                );
+                setSelectedProduct(null)
               }
             })
             .catch((err) => toast.error(err.message));
@@ -51,12 +52,13 @@ const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
       <input type="checkbox" id="purchase-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
-          {/* <label
+          <button
+            onClick={() => setSelectedProduct(null)}
             htmlFor="purchase-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
-          </label> */}
+          </button>
           <h3 className="text-lg font-bold text-center text-info">
             Hello, {user?.displayName}
           </h3>
@@ -104,12 +106,14 @@ const Modal = ({ setSelectedProduct, selectedProduct,refetch }) => {
               name="phoneNumber"
               placeholder="Phone Number"
               className="input input-bordered w-full my-3"
+              required
             />
             <input
               type="text"
               name="meetingLocation"
               placeholder="Meeting Location"
               className="input input-bordered w-full my-3"
+              required
             />
             <button
               type="submit"
