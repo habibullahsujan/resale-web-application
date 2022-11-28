@@ -11,7 +11,7 @@ const AdvertisedProduct = () => {
   useEffect(() => {
     setLoading(true);
     try {
-      axios.get("http://localhost:5000/advertised/products").then((data) => {
+      axios.get("https://server-side-phi-lake.vercel.app/advertised/products").then((data) => {
         setProducts(data.data);
         setLoading(false);
       });

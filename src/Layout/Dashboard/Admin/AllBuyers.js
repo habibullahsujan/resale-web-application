@@ -12,7 +12,7 @@ const AllBuyers = () => {
   } = useQuery({
     queryKey: ["all-buyer"],
     queryFn: () =>
-      fetch("http://localhost:5000/all-buyer").then((res) => res.json()),
+      fetch("https://server-side-phi-lake.vercel.app/all-buyer").then((res) => res.json()),
   });
 
   if (isLoading) {

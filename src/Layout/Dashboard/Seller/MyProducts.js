@@ -24,7 +24,7 @@ const MyProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`,
+        `https://server-side-phi-lake.vercel.app/products?email=${user?.email}`,
         {
           headers:{
             authorization:`Bearer ${localStorage.getItem('accessToken')}`

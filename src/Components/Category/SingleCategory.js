@@ -15,7 +15,7 @@ const SingleCategory = () => {
   } = useQuery({
     queryKey: ["single_category"],
     queryFn: () =>
-      fetch(`http://localhost:5000/single_category/${categoryId}`).then((res) =>
+      fetch(`https://server-side-phi-lake.vercel.app/single_category/${categoryId}`).then((res) =>
         res.json()
       ),
   });

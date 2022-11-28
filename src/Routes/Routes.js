@@ -38,7 +38,7 @@ export const routes = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/single_category/${params.id}`),
+          fetch(`https://server-side-phi-lake.vercel.app/single_category/${params.id}`),
       },
       {
         path: "/login",
@@ -59,12 +59,12 @@ export const routes = createBrowserRouter([
             <Payment />
           </PrivateRoute>
         ),
-        loader:({params})=>fetch(`http://localhost:5000/payment/${params.id}`)
+        loader:({params})=>fetch(`https://server-side-phi-lake.vercel.app/payment/${params.id}`)
       },
       {
         path: "/all-products",
         element: <AllProducts />,
-        loader: () => fetch(`http://localhost:5000/all-products`),
+        loader: () => fetch(`https://server-side-phi-lake.vercel.app/all-products`),
       },
     ],
   },

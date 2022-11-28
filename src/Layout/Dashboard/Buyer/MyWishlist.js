@@ -17,7 +17,7 @@ const MyWishlist = () => {
   } = useQuery({
     queryKey: ["my-wishlist"],
     queryFn: () =>
-      fetch(`http://localhost:5000/my-wishlist?email=${user?.email}`, {
+      fetch(`https://server-side-phi-lake.vercel.app/my-wishlist?email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

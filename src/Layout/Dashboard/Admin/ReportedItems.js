@@ -15,7 +15,7 @@ const ReportedItems = () => {
   } = useQuery({
     queryKey: ["reported-products"],
     queryFn: () =>
-      fetch("http://localhost:5000/reported-products").then((res) =>
+      fetch("https://server-side-phi-lake.vercel.app/reported-products").then((res) =>
         res.json()
       ),
   });

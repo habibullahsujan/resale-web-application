@@ -46,7 +46,7 @@ const Login = () => {
           user_role: 'buyer',
           user_photo: user?.display_url,
         };
-        fetch("http://localhost:5000/users", {
+        fetch("https://server-side-phi-lake.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

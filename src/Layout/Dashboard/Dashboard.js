@@ -12,7 +12,7 @@ const Dashboard = () => {
   useEffect(() => {
     setLoader(true);
     if (user?.email) {
-      fetch(`http://localhost:5000/user?email=${user?.email}`, {  headers: {
+      fetch(`https://server-side-phi-lake.vercel.app/user?email=${user?.email}`, {  headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },})
         .then((res) => res.json())

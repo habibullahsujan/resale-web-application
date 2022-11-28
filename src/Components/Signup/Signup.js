@@ -55,7 +55,7 @@ const Signup = () => {
                     user_photo: img?.data.display_url,
                    
                   };
-                  fetch("http://localhost:5000/users", {
+                  fetch("https://server-side-phi-lake.vercel.app/users", {
                     method: "POST",
                     headers: {
                       "content-type": "application/json",

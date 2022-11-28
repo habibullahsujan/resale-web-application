@@ -13,7 +13,7 @@ const AllProducts = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:5000/all-products").then((res) => res.json()),
+      fetch("https://server-side-phi-lake.vercel.app/all-products").then((res) => res.json()),
   });
 
   if (isLoading) {

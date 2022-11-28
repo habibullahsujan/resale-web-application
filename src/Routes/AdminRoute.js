@@ -11,7 +11,7 @@ const AdminRoute = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     if (user?.email) {
-      fetch(`http://localhost:5000/user-admin?email=${user?.email}`,{
+      fetch(`https://server-side-phi-lake.vercel.app/user-admin?email=${user?.email}`,{
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

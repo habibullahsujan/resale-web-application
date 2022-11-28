@@ -17,7 +17,7 @@ const MyOrders = () => {
   } = useQuery({
     queryKey: ["my-orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/my-orders?email=${user?.email}`, {
+      fetch(`https://server-side-phi-lake.vercel.app/my-orders?email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

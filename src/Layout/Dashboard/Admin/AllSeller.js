@@ -12,7 +12,7 @@ const AllSeller = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:5000/all-seller").then((res) => res.json()),
+      fetch("https://server-side-phi-lake.vercel.app/all-seller").then((res) => res.json()),
   });
 
   const handleDeleteSeller = (id) => {
