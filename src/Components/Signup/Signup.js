@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Oval} from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import setJWTToken from "../../Authentication/setJWTToken";
 import { AuthContext } from "../../Context/UserContext";
 
 const Signup = () => {
@@ -40,6 +41,7 @@ const Signup = () => {
         if (img.status) {
           createUser(data.email, data.confirmPassword)
             .then((result) => {
+              setJWTToken(data?.email)
               const profile = {
                 displayName: data.userName,
                 photoURL: img.data.display_url,
@@ -62,6 +64,7 @@ const Signup = () => {
                     .then((res) => res.json())
                     .then((data) => console.log(data));
                   toast.success("your profile updated.");
+          
                   setLoader(false)
                   navigate('/')
                   setLoading(false);

@@ -39,10 +39,10 @@ const ProductCard = ({
       product_price: price,
       product_img: picture,
       product_market_price: originalPrice,
-      productImg: picture,
       seller_location: location,
       seller_email: sellerEmail,
       seller_name: sellerName,
+      seller_number: sellerPhone,
       sellerIsVerified,
     };
     addProductAWishlist(wishListData)

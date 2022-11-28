@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRecycle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/UserContext";
@@ -6,6 +7,15 @@ import { AuthContext } from "../../Context/UserContext";
 const Navbar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogOut = () => {
+    logOutUser()
+      .then(() => {
+        localStorage.removeItem("accessToken");
+        toast.success("LogOut Success.");
+      })
+      .catch((err) => toast.error(err.message));
+  };
   return (
     <div>
       <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -50,7 +60,7 @@ const Navbar = () => {
                     Dashboard
                   </Link>
                 </li>
-                <li onClick={() => logOutUser()}>
+                <li onClick={handleLogOut}>
                   {" "}
                   <Link
                     title="logout"

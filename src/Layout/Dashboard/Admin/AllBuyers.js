@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import toast from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
-
+import { deleteAUser } from "../../../Auth/user";
 
 const AllBuyers = () => {
-
-
   const {
     isLoading,
     data: buyers,
+    refetch,
   } = useQuery({
     queryKey: ["all-buyer"],
     queryFn: () =>
       fetch("http://localhost:5000/all-buyer").then((res) => res.json()),
   });
-  
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -33,6 +33,17 @@ const AllBuyers = () => {
       </div>
     );
   }
+
+  const handleDeleteBuyer = (id) => {
+    deleteAUser(id)
+      .then((data) => {
+        if(data.acknowledged){
+          toast.success('A buyer deleted.');
+          refetch();
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   return (
     <div className="text-black lg:ml-64 bg-blue-400">
@@ -84,17 +95,11 @@ const AllBuyers = () => {
                     Actions
                   </span>
                   <button
-                    //  onClick={openModal}
+                    onClick={() => handleDeleteBuyer(buyer._id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
                   >
                     Delete
-                  </button>{" "}
-                  {/* <DeleteModal
-                isOpen={isOpen}
-                closeModal={closeModal}
-                modalHandler={modalHandler}
-                id={product?._id}
-              /> */}
+                  </button>
                 </td>
               </tr>
             ))}

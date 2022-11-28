@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FaBars, FaRecycle } from "react-icons/fa";
 import { Oval } from "react-loader-spinner";
 import { Link } from "react-router-dom";
@@ -12,6 +13,16 @@ const Sidebar = ({ userData }) => {
   const [isActive, setActive] = useState(false);
   const handleToggle = () => {
     setActive(!isActive);
+  };
+
+
+  const handleLogOut = () => {
+    logOutUser()
+      .then(() => {
+        localStorage.removeItem("accessToken");
+        toast.success("LogOut Success.");
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   if (!userData) {
@@ -119,7 +130,7 @@ const Sidebar = ({ userData }) => {
         <div>
           <Link to={'/'} className="btn w-full my-1">Back To Home</Link>
           <hr />
-          <li onClick={() => logOutUser()} className="btn w-full">
+          <li onClick={handleLogOut} className="btn w-full">
             logout
           </li>
         </div>

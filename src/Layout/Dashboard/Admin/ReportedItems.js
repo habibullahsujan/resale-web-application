@@ -1,11 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import toast from "react-hot-toast";
+import {
+  deleteFromReportedCollection,
+  deleteProduct,
+} from "../../../Auth/product";
 
 const ReportedItems = () => {
   const {
     isLoading,
     error,
     data: reportedProducts,
+    refetch,
   } = useQuery({
     queryKey: ["reported-products"],
     queryFn: () =>
@@ -14,12 +20,32 @@ const ReportedItems = () => {
       ),
   });
   if (isLoading) {
-    return "Loading...";
+    return (
+      <div className="flex justify-center items-center">
+        <h2>Loading.....Data...</h2>
+      </div>
+    );
   }
 
   if (error) {
     return "An error has occurred: " + error.message;
   }
+  const handleDeleteReportedItem = (productId, reportedProductId) => {
+    deleteProduct(productId)
+      .then((data) => {
+        if (data.acknowledged) {
+          deleteFromReportedCollection(reportedProductId)
+            .then((data) => {
+              if (data.acknowledged) {
+                toast.success("Product successfully deleted.");
+                refetch();
+              }
+            })
+            .catch((err) => toast.error(err.message));
+        }
+      })
+      .catch((error) => toast.error(error));
+  };
 
   return (
     <div>
@@ -43,7 +69,16 @@ const ReportedItems = () => {
                 <td>{product?.user_email}</td>
                 <td>{product?.product_name}</td>
                 <td>{product?.product_price}</td>
-                <td>{}</td>
+                <td>
+                  <button
+                    onClick={() =>
+                      handleDeleteReportedItem(product?.productId, product?._id)
+                    }
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

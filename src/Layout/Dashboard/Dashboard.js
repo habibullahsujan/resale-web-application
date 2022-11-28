@@ -6,12 +6,14 @@ import Sidebar from "../../Components/Dashboard/Sidebar";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  const [userData, setUserData]=useState({});
-  const [loader, setLoader]=useState(true)
+  const [userData, setUserData] = useState({});
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     setLoader(true);
     if (user?.email) {
-      fetch(`http://localhost:5000/user?email=${user?.email}`)
+      fetch(`http://localhost:5000/user?email=${user?.email}`, {  headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },})
         .then((res) => res.json())
         .then((data) => {
           setUserData(data);
@@ -20,8 +22,12 @@ const Dashboard = () => {
     }
   }, [user?.email]);
 
-  if(loader){
-    return <div>Loading....</div>
+  if (loader) {
+    return (
+      <div className="flex justify-center items-center">
+        <h1>Loading....</h1>
+      </div>
+    );
   }
   return (
     <div>

@@ -1,5 +1,3 @@
-
-
 //get category product
 export const categoryProducts = async (id) => {
   const url = `http://localhost:5000/single_category/${id}`;
@@ -22,10 +20,17 @@ export const uploadNewProductData = async (product) => {
   return data;
 };
 
+
+
 //delete a single product
-export const deleteProduct = async (id) => {
-  const url = `http://localhost:5000/product/delete/${id}`;
-  const response = await fetch(url, { method: "DELETE" });
+export const deleteProduct = async (id, email) => {
+  const url = `http://localhost:5000/product/delete/${id}?email=${email}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
   const data = await response.json();
   return data;
 };
@@ -116,18 +121,50 @@ export const storeBookedProduct = async (bookedProductData) => {
 };
 
 //remove item form cart
-export const removeItemFromCart = async (id) => {
-  const url = `http://localhost:5000/remove-from-cart/${id}`;
+export const removeItemFromCart = async (id, email) => {
+  const url = `http://localhost:5000/remove-from-cart/${id}?email=${email}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const updateBookedProductSoldStatus = async (id) => {
+  const url = `http://localhost:5000/bookedProducts/${id}`;
+  const response = await fetch(url, { method: "PUT" });
+  const data = await response.json();
+  return data;
+};
+//update wishlist product sold status
+export const updateWishlistProductSoldStatus = async (id) => {
+  const url = `http://localhost:5000/wishlistsProducts/${id}`;
+  const response = await fetch(url, { method: "PUT" });
+  const data = await response.json();
+  return data;
+};
+//product remove from wishlist
+export const removeItemFromWishlist = async (id, email) => {
+  const url = `http://localhost:5000/remove-from-wishlist/${id}?email=${email}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+//delete from reported product collection
+export const deleteFromReportedCollection = async (id) => {
+  const url = `http://localhost:5000/delete-report/${id}`;
   const response = await fetch(url, {
     method: "DELETE",
   });
   const data = await response.json();
   return data;
 };
-
-export const updateBookedProductSoldStatus=async(id)=>{
-  const url = `http://localhost:5000/bookedProducts/${id}`;
-  const response = await fetch(url, { method: "PUT" });
-  const data = await response.json();
-  return data;
-}

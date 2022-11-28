@@ -17,16 +17,18 @@ const MyOrders = () => {
   } = useQuery({
     queryKey: ["my-orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/my-orders?email=${user?.email}`).then(
-        (res) => res.json()
-      ),
+      fetch(`http://localhost:5000/my-orders?email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }).then((res) => res.json()),
   });
 
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
   const handleRemoveItem = (id) => {
-    removeItemFromCart(id)
+    removeItemFromCart(id, user?.email)
       .then((data) => {
         if (data.deletedCount > 0) {
           toast.success("Item Removed.");
@@ -35,8 +37,6 @@ const MyOrders = () => {
       })
       .catch((err) => toast.error(err.message));
   };
-
-
 
   return (
     <>

@@ -5,23 +5,27 @@ import { AuthContext } from "../../Context/UserContext";
 import { useForm } from "react-hook-form";
 import { Oval } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import setJWTToken from "../../Authentication/setJWTToken";
 
 const Login = () => {
-  const { loginUser, loginWithGoogle } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.form?.pathname || "/";
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { loginUser, loginWithGoogle } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.form?.pathname || "/";
+  
   const onSubmit = (data) => {
     setLoading(true);
     loginUser(data.email, data.password)
       .then((result) => {
+        const user=result.user;
+        setJWTToken(user.email)
         setLoading(false);
         navigate(from, { replace: true });
       })
@@ -32,11 +36,33 @@ const Login = () => {
   };
 
   const handleLoginWithGoogle = () => {
+    setLoading(true);
     loginWithGoogle()
       .then((result) => {
+        const user=result.user;
+        const userInfo = {
+          user_name: user?.displayName,
+          user_email: user?.email,
+          user_role: 'buyer',
+          user_photo: user?.display_url,
+        };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setLoading(false)
+            console.log(data)});
+        setJWTToken(user?.email)
         navigate(from, { replace: true });
       })
-      .catch((error) => toast.error(error.message));
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error.message)});
   };
   return (
     <>

@@ -3,10 +3,7 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
 import { Link } from "react-router-dom";
-import {
-  advertisedAProduct,
-  deleteProduct,
-} from "../../../Auth/product";
+import { advertisedAProduct, deleteProduct } from "../../../Auth/product";
 import DeleteModal from "../../../Components/Modal/DeleteModal";
 import { AuthContext } from "../../../Context/UserContext";
 
@@ -27,18 +24,24 @@ const MyProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`
+        `http://localhost:5000/products?email=${user?.email}`,
+        {
+          headers:{
+            authorization:`Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
       );
       const data = await res.json();
       return data;
     },
   });
 
+
   const modalHandler = (id) => {
-    deleteProduct(id)
+    deleteProduct(id, user?.email)
       .then((data) => {
-        refetch();
         toast.success("Product successfully deleted.");
+        refetch();
       })
       .catch((error) => toast.error(error));
   };
@@ -90,6 +93,7 @@ const MyProducts = () => {
                 <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                   Product Status
                 </th>
+
                 <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                   Advertise
                 </th>
@@ -101,7 +105,10 @@ const MyProducts = () => {
             <tbody className="block md:table-row-group">
               {products &&
                 products.map((product) => (
-                  <tr key={product._id} className="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                  <tr
+                    key={product._id}
+                    className="bg-gray-300 border border-grey-500 md:border-none block md:table-row"
+                  >
                     <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                       <span className="inline-block w-1/3 md:hidden font-bold">
                         Product Name
@@ -124,21 +131,27 @@ const MyProducts = () => {
                       <span className="inline-block w-1/3 md:hidden font-bold">
                         Product Status
                       </span>
-                      {product?.saleStatus === 'sold'? "Sold" : "unsold"}
+                      {product?.saleStatus === "sold" ? "Sold" : "unsold"}
                     </td>
-                    {product?.saleStatus ==='unsold' && (
-                      <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                        <span className="inline-block w-1/3 md:hidden font-bold">
-                          Advertise
+
+                    <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                      <span className="inline-block w-1/3 md:hidden font-bold">
+                        Advertise
+                      </span>
+                      {product?.isAdvertised ? (
+                        <span className="font-semibold bg-sky-500 p-1 rounded-lg">
+                          Product is advertising...
                         </span>
+                      ) : (
                         <button
+                          disabled={product?.saleStatus === "sold"}
                           onClick={(id) => handleAdvertise(product?._id)}
-                          className="bg-green-400 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
+                          className="bg-green-400 text-white font-bold py-1 px-2 border border-green-500 rounded"
                         >
                           Advertise
                         </button>
-                      </td>
-                    )}
+                      )}
+                    </td>
                     <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                       <span className="inline-block w-1/3 md:hidden font-bold">
                         Actions

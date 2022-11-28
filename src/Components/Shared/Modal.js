@@ -19,7 +19,7 @@ const Modal = ({ setSelectedProduct, selectedProduct, refetch }) => {
     const bookedProductInfo = {
       product_id: selectedProduct._id,
       productName: productName,
-      productImg:selectedProduct?.picture,
+      productImg: selectedProduct?.picture,
       productPrice,
       customerName,
       customerEmail,
@@ -31,17 +31,23 @@ const Modal = ({ setSelectedProduct, selectedProduct, refetch }) => {
     };
     storeBookedProduct(bookedProductInfo)
       .then((data) => {
+        // if (data.acknowledged) {
+        //   updateSellStatus(selectedProduct._id)
+        //     .then((data) => {
+        //       if (data.acknowledged) {
+        //         toast.success(
+        //           "Product booked success. you can pay for this product from your dashboard."
+        //         );
+        //         setSelectedProduct(null)
+        //       }
+        //     })
+        //     .catch((err) => toast.error(err.message));
+        // }
         if (data.acknowledged) {
-          updateSellStatus(selectedProduct._id)
-            .then((data) => {
-              if (data.acknowledged) {
-                toast.success(
-                  "Product booked success. you can pay for this product from your dashboard."
-                );
-                setSelectedProduct(null)
-              }
-            })
-            .catch((err) => toast.error(err.message));
+          toast.success(
+            "Product booked success. you can pay for this product from your dashboard."
+          );
+          setSelectedProduct(null);
         }
       })
       .catch((err) => toast.error(err.message));

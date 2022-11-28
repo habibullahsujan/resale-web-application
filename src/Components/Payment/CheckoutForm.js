@@ -6,6 +6,7 @@ import {
   soldProduct,
   updateBookedProductSoldStatus,
   updateSoldStatus,
+  updateWishlistProductSoldStatus,
 } from "../../Auth/product";
 import { AuthContext } from "../../Context/UserContext";
 
@@ -27,7 +28,7 @@ const CheckoutForm = ({ product, bookedProductId }) => {
     _id,
     productId,
   } = product;
-  // console.log(product);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,7 +104,11 @@ const CheckoutForm = ({ product, bookedProductId }) => {
                 if (data.acknowledged) {
                   setTransactionId();
                   updateBookedProductSoldStatus(bookedProductId)
-                    .then((data) => console.log(data))
+                    .then((data) => {
+                      updateWishlistProductSoldStatus(bookedProductId)
+                        .then((data) => console.log(data))
+                        .catch((err) => toast.error(err.message));
+                    })
                     .catch((err) => toast.error(err.message));
                   setSuccess(`your payment completed`);
                   navigate("/dashboard/my-orders");

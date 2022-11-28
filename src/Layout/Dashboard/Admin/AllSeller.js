@@ -1,17 +1,30 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Oval } from "react-loader-spinner";
+import { deleteAUser } from "../../../Auth/user";
+import toast from "react-hot-toast";
 
 const AllSeller = () => {
   const {
     isLoading,
-
     data: seller,
+    refetch,
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       fetch("http://localhost:5000/all-seller").then((res) => res.json()),
   });
+
+  const handleDeleteSeller = (id) => {
+    deleteAUser(id)
+      .then((data) => {
+        if(data.acknowledged){
+          toast.success('A seller deleted.');
+          refetch();
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   if (isLoading) {
     return (
@@ -81,17 +94,11 @@ const AllSeller = () => {
                     Actions
                   </span>
                   <button
-                    //  onClick={openModal}
+                    onClick={(id) => handleDeleteSeller(slr._id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
                   >
                     Delete
-                  </button>{" "}
-                  {/* <DeleteModal
-                  isOpen={isOpen}
-                  closeModal={closeModal}
-                  modalHandler={modalHandler}
-                  id={product?._id}
-                /> */}
+                  </button>
                 </td>
               </tr>
             ))}
