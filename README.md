@@ -11,3 +11,6 @@
 - Here buyer can buy any product from online and also buy product from seller directly.
 - Here user/buyer can pay product price from online.
 ---
+adminEmail: <habibsujan002@gmail.com>
+
+adminPassword: <123456>
