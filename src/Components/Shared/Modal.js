@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { storeBookedProduct, updateSellStatus } from "../../Auth/product";
+import { storeBookedProduct } from "../../Auth/product";
 import { AuthContext } from "../../Context/UserContext";
 
-const Modal = ({ setSelectedProduct, selectedProduct, refetch }) => {
+const Modal = ({ setSelectedProduct, selectedProduct }) => {
   const { user } = useContext(AuthContext);
 
   const handleClickBuyNow = (e) => {

@@ -6,12 +6,16 @@ import { AuthContext } from "../Context/UserContext";
 const SellerRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
-  const [userData, setUserData]=useState({});
-  const [loading, setLoading]=useState(true)
+  const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
     if (user?.email) {
-      fetch(`http://localhost:5000/user?email=${user?.email}`)
+      fetch(`http://localhost:5000/user-seller?email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           setUserData(data);
@@ -19,7 +23,7 @@ const SellerRoute = ({ children }) => {
         });
     }
   }, [user?.email]);
-  if ( loading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Oval

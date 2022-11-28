@@ -36,7 +36,6 @@ const MyProducts = () => {
     },
   });
 
-
   const modalHandler = (id) => {
     deleteProduct(id, user?.email)
       .then((data) => {
@@ -49,9 +48,11 @@ const MyProducts = () => {
   const handleAdvertise = (id) => {
     advertisedAProduct(id)
       .then((data) => {
+        refetch()
         toast.success(
           "Your product successfully advertised. It will be show homepage form now."
         );
+        
       })
       .catch((error) => toast.error(error.message));
   };

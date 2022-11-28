@@ -33,7 +33,7 @@ const Signup = () => {
     const formData = new FormData();
     formData.append("image", data.profilePicture[0]);
     fetch(
-      `https://api.imgbb.com/1/upload?key=ed10d9b0c9f2caf53afe65dfd8a4c97f`,
+      `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbbKey}`,
       { method: "POST", body: formData }
     )
       .then((res) => res.json())
@@ -53,6 +53,7 @@ const Signup = () => {
                     user_email: data?.email,
                     user_role: userRole,
                     user_photo: img?.data.display_url,
+                   
                   };
                   fetch("http://localhost:5000/users", {
                     method: "POST",

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Oval } from "react-loader-spinner";
-import { deleteAUser } from "../../../Auth/user";
+import { deleteAUser, verifySeller } from "../../../Auth/user";
 import toast from "react-hot-toast";
 
 const AllSeller = () => {
@@ -18,12 +18,24 @@ const AllSeller = () => {
   const handleDeleteSeller = (id) => {
     deleteAUser(id)
       .then((data) => {
-        if(data.acknowledged){
-          toast.success('A seller deleted.');
+        if (data.acknowledged) {
+          toast.success("A seller deleted.");
           refetch();
         }
       })
       .catch((err) => toast.error(err.message));
+  };
+
+  const handleVerifyButton = (id) => {
+    verifySeller(id)
+      .then((data) => {
+        toast.success("seller is verified now.");
+        refetch();
+
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
+    console.log(id);
   };
 
   if (isLoading) {
@@ -61,6 +73,9 @@ const AllSeller = () => {
             <th className=" p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
               Action
             </th>
+            <th className=" p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+              Verify
+            </th>
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
@@ -88,16 +103,27 @@ const AllSeller = () => {
                   </span>
                   {slr?.user_email}
                 </td>
-
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
                     Actions
                   </span>
                   <button
-                    onClick={(id) => handleDeleteSeller(slr._id)}
+                    onClick={() => handleDeleteSeller(slr._id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded"
                   >
                     Delete
+                  </button>
+                </td>
+                <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                  <span className="inline-block w-1/3 md:hidden font-bold">
+                    Actions
+                  </span>
+                  <button
+                    disabled={slr?.sellerIsVerified === true}
+                    onClick={() => handleVerifyButton(slr._id)}
+                    className="bg-green-400 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                  >
+                    {slr?.sellerIsVerified ? "Verified" : "Verify"}
                   </button>
                 </td>
               </tr>

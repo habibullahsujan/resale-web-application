@@ -4,6 +4,7 @@ import { Oval } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { uploadNewProductData } from "../../../Auth/product";
 import { uploadImage } from "../../../Auth/uploadImage";
+import { getAUserData } from "../../../Auth/user";
 
 import { AuthContext } from "../../../Context/UserContext";
 
@@ -11,7 +12,6 @@ const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   const handleAddProduct = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -43,39 +43,43 @@ const AddProduct = () => {
         const month = new Date().getMonth();
         const year = new Date().getFullYear();
         if (imgData.success) {
-          const newProduct = {
-            saleStatus: "unsold",
-            price: productPrice,
-            originalPrice: productMarketPrice,
-            picture: imgData?.data?.display_url,
-            productCondition: productCondition,
-            yearOfUse: yearOfUse,
-            brandName: productCategory,
-            productName: productName,
-            categoryName: productCategory,
-            categoryId: productCategoryId,
-            sellerIsVerified: false,
-            sellerName: user?.displayName,
-            sellerEmail: user?.email,
-            sellerPhone: sellerMobile,
-            location: location,
-            productDescription: description,
-            postedTime: { date, month, year },
-          };
-
-          uploadNewProductData(newProduct)
-            .then((data) => {
-              form.reset();
-              if (data.acknowledged) {
-                toast.success("Your product successfully added.");
-                setLoading(false);
-                navigate("/dashboard/my-products");
-              }
-            })
-            .catch((err) => {
-              setLoading(false);
-              toast.error(err);
-            });
+          getAUserData(user?.email)
+            .then((userIn) => {
+              const newProduct = {
+                saleStatus: "unsold",
+                price: productPrice,
+                originalPrice: productMarketPrice,
+                picture: imgData?.data?.display_url,
+                productCondition: productCondition,
+                yearOfUse: yearOfUse,
+                brandName: productCategory,
+                productName: productName,
+                categoryName: productCategory,
+                categoryId: productCategoryId,
+                sellerIsVerified: userIn?.sellerIsVerified,
+                sellerName: user?.displayName,
+                sellerEmail: user?.email,
+                sellerPhone: sellerMobile,
+                location: location,
+                productDescription: description,
+                postedTime: { date, month, year },
+              };
+              uploadNewProductData(newProduct)
+                .then((data) => {
+                  form.reset();
+                  if (data.acknowledged) {
+                    toast.success("Your product successfully added.");
+                    setLoading(false);
+                    navigate("/dashboard/my-products");
+                  }
+                })
+                .catch((err) => {
+                  setLoading(false);
+                  toast.error(err);
+                });
+              })
+            .catch((err) => toast.error(err));
+     
         }
       })
       .catch((err) => {

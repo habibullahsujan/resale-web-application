@@ -1,25 +1,27 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import ProductCard from "../Shared/ProductCard";
-import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Oval } from "react-loader-spinner";
+import toast from "react-hot-toast";
 
 const AdvertisedProduct = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const {
-    isLoading,
-    error,
-    data: products,
-    refetch,
-  } = useQuery({
-    queryKey: ["advertised"],
-    queryFn: () =>
-      fetch("http://localhost:5000/advertised/products").then((res) =>
-        res.json()
-      ),
-  });
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    try {
+      axios.get("http://localhost:5000/advertised/products").then((data) => {
+        setProducts(data.data);
+        setLoading(false);
+      });
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, []);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Oval
@@ -37,9 +39,6 @@ const AdvertisedProduct = () => {
       </div>
     );
   }
-
-  if (error) return "An error has occurred: " + error.message;
-
   return (
     <>
       {products.length ? (
@@ -52,7 +51,6 @@ const AdvertisedProduct = () => {
                 key={product._id}
                 setSelectedProduct={setSelectedProduct}
                 selectedProduct={selectedProduct}
-                refetch={refetch}
               />
             ))}
           </div>

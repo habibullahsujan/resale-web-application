@@ -7,7 +7,6 @@ import { AuthContext } from "../../Context/UserContext";
 const Navbar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const handleLogOut = () => {
     logOutUser()
       .then(() => {
@@ -119,7 +118,7 @@ const Navbar = () => {
               </svg>
             </button>
             {isMenuOpen && (
-              <div className="absolute top-0 left-0 w-full">
+              <div className="absolute top-0 left-0 w-full z-50">
                 <div className="p-5 bg-white border rounded shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -167,15 +166,26 @@ const Navbar = () => {
                         </Link>
                       </li>
                       {user ? (
-                        <li onClick={() => logOutUser()}>
-                          {" "}
-                          <Link
-                            title="logout"
-                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                          >
-                            Logout
-                          </Link>
-                        </li>
+                        <>
+                          <li>
+                            {" "}
+                            <Link
+                              to={"/dashboard"}
+                              className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                          <li onClick={handleLogOut}>
+                            {" "}
+                            <Link
+                              title="logout"
+                              className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            >
+                              Logout
+                            </Link>
+                          </li>
+                        </>
                       ) : (
                         <>
                           {" "}

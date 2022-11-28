@@ -11,7 +11,11 @@ const AdminRoute = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     if (user?.email) {
-      fetch(`http://localhost:5000/user?email=${user?.email}`)
+      fetch(`http://localhost:5000/user-admin?email=${user?.email}`,{
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           setUserData(data);

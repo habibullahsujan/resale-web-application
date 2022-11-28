@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
@@ -11,7 +10,6 @@ const ProductCard = ({
   loadProducts,
   setSelectedProduct,
   selectedProduct,
-  refetch
 }) => {
   const { user } = useContext(AuthContext);
   const {
@@ -116,7 +114,15 @@ const ProductCard = ({
               <p>Seller Email:{sellerEmail}</p>
               <p>Seller Phone:{sellerPhone}</p>
               <p>Number of year use:{yearOfUse}</p>
-              <p>Posted On: {postedTime?.date}-{postedTime?.month}-{postedTime?.year}</p>
+              <p>
+                Posted On: {postedTime?.date}-{postedTime?.month}-
+                {postedTime?.year}
+              </p>
+              {sellerIsVerified ? (
+                <p className="text-green-500">Product added by a verified seller</p>
+              ) : (
+                <p className="text-red-200">Product added by a unverified seller.</p>
+              )}
             </div>
           </div>
           <div>
@@ -130,13 +136,13 @@ const ProductCard = ({
           </div>
         </div>
       </div>
-      {  selectedProduct && (
+      {selectedProduct && (
         <Modal
           product={product}
           loadProducts={loadProducts}
           setSelectedProduct={setSelectedProduct}
           selectedProduct={selectedProduct}
-          refetch={refetch}
+   
         />
       )}
     </div>
