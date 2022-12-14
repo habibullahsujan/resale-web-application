@@ -20,8 +20,6 @@ export const uploadNewProductData = async (product) => {
   return data;
 };
 
-
-
 //delete a single product
 export const deleteProduct = async (id, email) => {
   const url = `https://server-side-phi-lake.vercel.app/product/delete/${id}?email=${email}`;

@@ -1,4 +1,5 @@
 import React from "react";
+import Search from "../SearchComponent/Search";
 import AdvertisedProduct from "./AdvertisedProduct";
 import Carousel from "./Carousel";
 
@@ -11,6 +12,9 @@ const Homes = () => {
   return (
     <div>
       <div className="lg:w-[85%] mx-auto">
+        <div>
+          <Search/>
+        </div>
         <Carousel/>
       </div>
       <div>

@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useContext } from "react";
 import toast from "react-hot-toast";
 import {
   deleteFromReportedCollection,
   deleteProduct,
 } from "../../../Auth/product";
+import { AuthContext } from "../../../Context/UserContext";
 
 const ReportedItems = () => {
+  const {user}=useContext(AuthContext)
   const {
     isLoading,
     error,
@@ -31,7 +34,7 @@ const ReportedItems = () => {
     return "An error has occurred: " + error.message;
   }
   const handleDeleteReportedItem = (productId, reportedProductId) => {
-    deleteProduct(productId)
+    deleteProduct(productId, user?.email)
       .then((data) => {
         if (data.acknowledged) {
           deleteFromReportedCollection(reportedProductId)
