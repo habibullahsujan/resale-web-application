@@ -7,25 +7,27 @@ import ProductCategory from "./ProductCategory";
 
 import Subscribe from "./Subscribe";
 
-
 const Homes = () => {
   return (
     <div>
       <div className="lg:w-[85%] mx-auto">
         <div>
-          <Search/>
+          <Search />
         </div>
-        <Carousel/>
+        <Carousel />
       </div>
+    
       <div>
         <AdvertisedProduct />
       </div>
       <div>
-        <h3 className="font-bold text-center text-2xl">Buy and Sell Product By Categories</h3>
+        <h3 className="font-bold text-center text-2xl">
+          Buy and Sell Product By Categories
+        </h3>
         <ProductCategory />
       </div>
       <div>
-        <Subscribe/>
+        <Subscribe />
       </div>
     </div>
   );

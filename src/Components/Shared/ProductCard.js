@@ -77,24 +77,25 @@ const ProductCard = ({
       .catch((error) => toast.error(error.message));
   };
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-        <img className="rounded-t-lg h-60 mx-auto w-96" src={picture} alt="" />
-
-        <div className="p-5">
-          <h5 className="text-gray-900 font-bold text-xl tracking-tight mb-2 dark:text-white">
-            {productName}
-          </h5>
+    <>
+    <div class="w-full flex flex-col p-4 shadow-xl border border-gray-400 rounded-lg">
+      <img className=" rounded-lg shadow-lg h-60 mx-auto w-96" src={picture} alt="" />
+      <h5 className="text-gray-900 font-bold text-xl tracking-tight dark:text-white my-5">
+        {productName}
+      </h5>
+      <div class="flex flex-col flex-1 rounded-lg w-full">
+        <div class="flex-1">
+          <div class="text-gray-900 text-2xl font-bold leading-snug"></div>
           <div className="p-2 rounded-lg">
             <div className="flex justify-between my-5">
               <button
-                onClick={(id) => handleWishList(_id)}
+                onClick={() => handleWishList(_id)}
                 className=" bg-[#5F4B8BFF] p-1 text-white font-semibold rounded-lg"
               >
                 Wishlist
               </button>
               <button
-                onClick={(id) => handleReportProduct(_id)}
+                onClick={() => handleReportProduct(_id)}
                 className=" bg-[#FF1E1E] text-white font-semibold rounded-lg p-1"
               >
                 Report
@@ -119,21 +120,25 @@ const ProductCard = ({
                 {postedTime?.year}
               </p>
               {sellerIsVerified ? (
-                <p className="text-green-500">Product added by a verified seller</p>
+                <p className="text-green-500">
+                  Product added by a verified seller
+                </p>
               ) : (
-                <p className="text-red-200">Product added by a unverified seller.</p>
+                <p className="text-red-200">
+                  Product added by a unverified seller.
+                </p>
               )}
             </div>
           </div>
-          <div>
-            <label
-              onClick={() => setSelectedProduct(product)}
-              htmlFor="purchase-modal"
-              className="btn w-full border border-[#5F4B8BFF] bg-[#5F4B8BFF] py-2 text-white font-bold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
-            >
-              Book Now
-            </label>
-          </div>
+        </div>
+        <div class="">
+          <label
+            onClick={() => setSelectedProduct(product)}
+            htmlFor="purchase-modal"
+            className=" mt-6 inline-flex items-center rounded-md shadow-sm btn w-full border border-[#5F4B8BFF] bg-[#5F4B8BFF] py-2 text-white font-bold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
+          >
+            Book Now
+          </label>
         </div>
       </div>
       {selectedProduct && (
@@ -142,10 +147,11 @@ const ProductCard = ({
           loadProducts={loadProducts}
           setSelectedProduct={setSelectedProduct}
           selectedProduct={selectedProduct}
-   
         />
       )}
     </div>
+  
+    </>
   );
 };
 
