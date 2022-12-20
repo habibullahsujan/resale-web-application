@@ -22,6 +22,7 @@ import ReportedItems from "../Layout/Dashboard/Admin/ReportedItems";
 import MyWishlist from "../Layout/Dashboard/Buyer/MyWishlist";
 import AllProducts from "../Components/AllProducts/AllProducts";
 import Payment from "../Components/Payment/Payment";
+import ProductDetails from "../Components/SearchComponent/ProductDetails";
 
 export const routes = createBrowserRouter([
   {
@@ -32,13 +33,19 @@ export const routes = createBrowserRouter([
       { path: "/", element: <Homes /> },
       {
         path: "/single_category/:id",
-        element: (
-          <PrivateRoute>
-            <SingleCategory />
-          </PrivateRoute>
-        ),
+        element: <SingleCategory />,
         loader: ({ params }) =>
-          fetch(`https://server-side-phi-lake.vercel.app/single_category/${params.id}`),
+          fetch(
+            `https://server-side-phi-lake.vercel.app/single_category/${params.id}`
+          ),
+      },
+      {
+        path: "/product/details/:id",
+        element: <ProductDetails />,
+        loader: ({ params }) =>
+        fetch(
+          `http://localhost:5000/product/details/${params.id}`
+        ),
       },
       {
         path: "/login",
@@ -59,12 +66,14 @@ export const routes = createBrowserRouter([
             <Payment />
           </PrivateRoute>
         ),
-        loader:({params})=>fetch(`https://server-side-phi-lake.vercel.app/payment/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`https://server-side-phi-lake.vercel.app/payment/${params.id}`),
       },
       {
         path: "/all-products",
         element: <AllProducts />,
-        loader: () => fetch(`https://server-side-phi-lake.vercel.app/all-products`),
+        loader: () =>
+          fetch(`https://server-side-phi-lake.vercel.app/all-products`),
       },
     ],
   },

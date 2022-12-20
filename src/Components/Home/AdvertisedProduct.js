@@ -43,7 +43,7 @@ const AdvertisedProduct = () => {
     <>
       {products.length ? (
         <div className="lg:w-[90%] mx-auto my-20">
-          <h2 className="font-bold text-lg">Advertised Products</h2>
+          <h2 className="font-bold text-lg text-center lg:text-left">Advertised Products</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-10">
             {products?.map((product) => (
               <ProductCard
