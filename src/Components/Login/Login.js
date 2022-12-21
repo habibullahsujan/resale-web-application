@@ -82,8 +82,8 @@ const Login = () => {
           />
         </div>
       ) : (
-        <div className="">
-          <div className="flex flex-col max-w-md bg-[#5F4B8BFF] text-white p-6 rounded-md sm:p-10 border border-blue-500 mx-auto my-20">
+        <div>
+          <div className="flex flex-col max-w-md  bg-white p-6 rounded-md sm:p-10 border border-blue-500 mx-auto my-20">
             <div className="mb-8 text-center">
               <h1 className="my-3 text-4xl font-bold">Login</h1>
               <p className="text-sm dark:text-gray-400">

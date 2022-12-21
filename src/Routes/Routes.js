@@ -44,7 +44,7 @@ export const routes = createBrowserRouter([
         element: <ProductDetails />,
         loader: ({ params }) =>
         fetch(
-          `http://localhost:5000/product/details/${params.id}`
+          ` https://server-side-phi-lake.vercel.app/product/details/${params.id}`
         ),
       },
       {
